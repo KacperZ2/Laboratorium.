@@ -1,0 +1,9 @@
+﻿<h2>Wyszukiwanie książki</h2>
+<form method="get" asp-controller="Book" asp-action="Echo">
+    <label for="name">Nazwa książki</label>
+    <input id="name" name="name" type="text" />
+
+    <label for="count">Liczba egzemplarzy</label>
+    <input id="count" name="count" type="number" />
+    <button type="submit">Wyślij</button>
+</form>

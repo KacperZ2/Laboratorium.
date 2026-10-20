@@ -6,7 +6,8 @@ namespace WebApp.Controllers;
 
 public class BookController : Controller
 {
-   
+    public IActionResult Index() => View();
+
     public IActionResult Hello() => Content("Witaj w BookStore!", "text/plain; charset=utf-8");
 
     public IActionResult Status(int code = 200) => StatusCode(code);
@@ -18,7 +19,19 @@ public class BookController : Controller
     }
 
    
-    public IActionResult Echo([FromQuery] string name = "nieznajomy", [FromQuery] int count = 1) =>
+    public IActionResult Echo(string? name, int? count)
+    {
+        if (count is null)
+        {
+            return BadRequest();
+        }
+
+        ViewBag.Count = count;
+        ViewBag.Name = name;
+        return View();
+    }
+
+    public IActionResult EchoText([FromQuery] string name = "nieznajomy", [FromQuery] int count = 1) =>
         Content(string.Join("\n", Enumerable.Repeat($"Cześć, {name}!", Math.Clamp(count, 1, 20))));
 
     public IActionResult Square(int id) => Content($"{id}^2 = {id * id}");
@@ -46,4 +59,6 @@ public class BookController : Controller
 
     
     public IActionResult Health() => Json(new { status = "ok", time = DateTime.Now });
+
+    public IActionResult Echoform() => View();
 }
